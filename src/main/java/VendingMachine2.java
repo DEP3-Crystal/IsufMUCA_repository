@@ -2,9 +2,16 @@ import java.util.Scanner;
 
 public class VendingMachine2 {
 
-    public static int[] getChange(int money, int price) {
+    public static int[] getChange(int money, int price) throws Exception {
+
+        //handle cases when input is a negative integer
+        if (money < 0 || price < 0) {
+            throw new Exception();
+        }
+
+        //handle standard
         int change = money - price;
-        int oneCents, fiveCents , tenCents , twentyFiveCents , fiftyCents , oneDollars ;
+        int oneCents, fiveCents, tenCents, twentyFiveCents, fiftyCents, oneDollars;
 
         oneDollars = change / 100;
         change -= (oneDollars * 100);
@@ -43,9 +50,11 @@ public class VendingMachine2 {
         float priceProd = scanner.nextFloat();
         System.out.println("Enter your money (in float Dollars): ");
         float moneyIns = scanner.nextFloat();
-
-        printChange(getChange((int) (moneyIns * 100), (int) (priceProd * 100)));
-
+        try {
+            printChange(getChange((int) (moneyIns * 100), (int) (priceProd * 100)));
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
 
     }
 
