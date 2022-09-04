@@ -29,8 +29,10 @@ public class HandleFileInputOutput {
 
 
     public static void writeScore(User user) throws IOException {
-        leaderboard.setProperty(user.getNickName(), Integer.toString(user.getScore()));
-        leaderboard.store(new FileOutputStream("C:/Users/HP/Documents/Java Projects/HangmanGame/src/main/resources/leaderboards.properties"), "");
+        if (user.getScore() > Integer.parseInt(leaderboard.getProperty(user.getNickName()))) {
+            leaderboard.setProperty(user.getNickName(), Integer.toString(user.getScore()));
+            leaderboard.store(new FileOutputStream("C:/Users/HP/Documents/Java Projects/HangmanGame/src/main/resources/leaderboards.properties"), "");
+        }
     }
 
     public static void viewLeaderboards() {
