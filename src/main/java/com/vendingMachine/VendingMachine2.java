@@ -1,40 +1,36 @@
+package com.vendingMachine;
+
 import java.util.Scanner;
 
-public class VendingMachine {
+public class VendingMachine2 {
+
     public static int[] getChange(int money, int price) throws Exception {
 
         //handle cases when input is a negative integer
         if (money < 0 || price < 0) {
             throw new Exception();
         }
+
         //handle standard
         int change = money - price;
-        short oneCents = 0, fiveCents = 0, tenCents = 0, twentyFiveCents = 0, fiftyCents = 0, oneDollars = 0;
+        int oneCents, fiveCents, tenCents, twentyFiveCents, fiftyCents, oneDollars;
 
-        while (change > 0) {
+        oneDollars = change / 100;
+        change -= (oneDollars * 100);
 
-            if (change % 100 == 0) {
-                oneDollars++;
-                change -= 100;
-            } else if (change % 50 == 0) {
-                fiftyCents++;
-                change -= 50;
-            } else if (change % 25 == 0) {
-                twentyFiveCents++;
-                change -= 25;
-            } else if (change % 10 == 0) {
-                tenCents++;
-                change -= 10;
-            } else if (change % 5 == 0) {
-                fiveCents++;
-                change -= 5;
-            } else {
-                oneCents++;
-                change -= 1;
-                //Because any integer % 1 = 0
-            }
+        fiftyCents = change / 50;
+        change -= (fiftyCents * 50);
 
-        }
+        twentyFiveCents = change / 25;
+        change -= (twentyFiveCents * 25);
+
+        tenCents = change / 10;
+        change -= (tenCents * 10);
+
+        fiveCents = change / 5;
+        change -= (fiveCents * 5);
+
+        oneCents = change;
 
         return new int[]{oneCents, fiveCents, tenCents, twentyFiveCents, fiftyCents, oneDollars};
     }
@@ -52,9 +48,9 @@ public class VendingMachine {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter product price:");
+        System.out.println("Enter product price (in float Dollars): ");
         float priceProd = scanner.nextFloat();
-        System.out.println("Enter your money:");
+        System.out.println("Enter your money (in float Dollars): ");
         float moneyIns = scanner.nextFloat();
         try {
             printChange(getChange((int) (moneyIns * 100), (int) (priceProd * 100)));
@@ -63,4 +59,12 @@ public class VendingMachine {
         }
 
     }
+
+    /*
+changes = 350;
+int a = changes/100 = 3.50
+changes = changes - a*100;
+a = changes/50 = 0
+ */
+
 }

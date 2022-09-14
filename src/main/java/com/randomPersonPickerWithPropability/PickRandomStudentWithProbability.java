@@ -1,3 +1,5 @@
+package com.randomPersonPickerWithPropability;
+
 import java.util.Random;
 import java.util.Scanner;
 

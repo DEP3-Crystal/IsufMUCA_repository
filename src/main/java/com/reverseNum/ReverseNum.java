@@ -1,3 +1,5 @@
+package com.reverseNum;
+
 import java.util.Scanner;
 
 public class ReverseNum {
