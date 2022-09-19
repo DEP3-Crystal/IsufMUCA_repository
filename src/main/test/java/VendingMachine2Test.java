@@ -1,3 +1,4 @@
+import com.vendingMachine.VendingMachine2;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
