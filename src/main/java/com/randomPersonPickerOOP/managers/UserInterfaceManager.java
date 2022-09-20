@@ -16,7 +16,7 @@ public class UserInterfaceManager {
         randomPersonManager = new RandomPersonManager(groupFromFile);
     }
 
-    public void printMenu() {
+    private void printMenu() {
         System.out.println("Hi !!!  PLEASE pick one of the options below.");
         System.out.println("1.Print all persons.");
         System.out.println("2.Pick a person by random.");
@@ -26,7 +26,7 @@ public class UserInterfaceManager {
         System.out.println("Answer: ");
     }
 
-    public void pickOption() {
+    private void pickOption() {
 
         try {
             int answerToMenu = scan.nextInt();
