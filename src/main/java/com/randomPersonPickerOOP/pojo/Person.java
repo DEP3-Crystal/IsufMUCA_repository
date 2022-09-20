@@ -13,7 +13,7 @@ public class Person {
 
     private Integer availableChances;
 
-    private final DataSourceFromFile employeeActivations;
+    private final DataSourceFromFile employeeActivations= new DataSourceFromFile("src/main/resources/EmployeeActivations.properties");
 
     public Person(String email) throws IOException {
         String tempName, tempSurname;
@@ -32,7 +32,6 @@ public class Person {
         tempSurname = email.substring(email.indexOf(".") + 1, email.indexOf("@"));
         surname = (tempSurname.charAt(0) + "").toUpperCase() + tempSurname.substring(1);
         availableChances = 10;
-        employeeActivations = new DataSourceFromFile("src/main/resources/EmployeeActivations.properties");
         timesActivated = employeeActivations.getRecord(email);
     }
 
