@@ -1,4 +1,6 @@
-package com.randomPersonPickerOOP;
+package com.randomPersonPickerOOP.data;
+
+import com.randomPersonPickerOOP.pojo.Person;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

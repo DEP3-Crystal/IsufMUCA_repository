@@ -1,4 +1,6 @@
-package com.randomPersonPickerOOP;
+package com.randomPersonPickerOOP.pojo;
+
+import com.randomPersonPickerOOP.data.DataSourceFromFile;
 
 import java.io.IOException;
 
@@ -7,7 +9,6 @@ public class Person {
     private final String email;
     private final String name;
     private final String surname;
-    //TODO add an external file to store how many times is activated each person
     private Integer timesActivated;
 
     private Integer availableChances;

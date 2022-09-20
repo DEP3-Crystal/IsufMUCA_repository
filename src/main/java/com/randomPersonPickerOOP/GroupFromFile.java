@@ -1,10 +1,13 @@
 package com.randomPersonPickerOOP;
 
+import com.randomPersonPickerOOP.data.DataSourceFromFile;
+import com.randomPersonPickerOOP.pojo.Person;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class GroupFromFile {
-    //TODO query data from external file
+
     private final ArrayList<Person> persons;
     private final DataSourceFromFile dataSourceFromFile;
 

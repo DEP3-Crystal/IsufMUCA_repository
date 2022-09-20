@@ -1,5 +1,7 @@
 package com.randomPersonPickerOOP;
 
+import com.randomPersonPickerOOP.managers.UserInterfaceManager;
+
 import java.io.IOException;
 
 public class Application {

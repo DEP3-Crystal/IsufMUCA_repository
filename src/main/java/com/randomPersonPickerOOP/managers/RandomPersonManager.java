@@ -1,4 +1,7 @@
-package com.randomPersonPickerOOP;
+package com.randomPersonPickerOOP.managers;
+
+import com.randomPersonPickerOOP.GroupFromFile;
+import com.randomPersonPickerOOP.pojo.Person;
 
 import java.util.Random;
 
