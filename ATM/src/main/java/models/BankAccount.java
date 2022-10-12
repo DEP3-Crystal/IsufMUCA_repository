@@ -1,15 +1,13 @@
 package models;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class BankAccount {
-    private String accountId;
-    private Person person;
-    private CreditCard card;
-
-    //TODO remove these properties depositInEuro, depositInDollars
-    private BigDecimal depositInEuro;
-    private BigDecimal depositInDollars;
+    private final String accountId;
+    private final Person person;
+    private final CreditCard card;
 
     private CurrencyType currency;
 
@@ -31,12 +29,13 @@ public class BankAccount {
         this.amount = amount;
     }
 
-    public BankAccount(String accountId, Person person, CreditCard card, BigDecimal depositInEuro, BigDecimal depositInDollars) {
+    public BankAccount(String accountId, Person person, CreditCard card, CurrencyType currency, BigDecimal amount) {
         this.accountId = accountId;
         this.person = person;
         this.card = card;
-        this.depositInEuro = depositInEuro;
-        this.depositInDollars = depositInDollars;
+        this.currency = currency;
+        this.amount = amount;
+
     }
 
     public String getAccountId() {
@@ -51,36 +50,17 @@ public class BankAccount {
         return card;
     }
 
-    public BigDecimal getDepositInEuro() {
-        return depositInEuro;
-    }
 
-    public BigDecimal getDepositInDollars() {
-        return depositInDollars;
-    }
-
-    public void withdrawInEuro(BigDecimal value) {
-        if (depositInEuro.compareTo(value) >= 0) {
-            depositInEuro = depositInEuro.subtract(value);
+    public void withdraw(BigDecimal value) {
+        if (amount.compareTo(value) >= 0) {
+            amount = amount.subtract(value);
         } else {
             throw new RuntimeException("Invalid withdraw value, you cannot withdraw more than you have in your account");
         }
     }
 
-    public void addToDepositInEuro(BigDecimal value) {
-        depositInEuro = depositInEuro.add(value);
-    }
-
-    public void withdrawInDollars(BigDecimal value) {
-        if (depositInEuro.compareTo(value) >= 0) {
-            depositInDollars = depositInDollars.subtract(value);
-        } else {
-            throw new RuntimeException("Invalid withdraw value, you cannot withdraw more than you have in your account");
-        }
-    }
-
-    public void addToDepositInDollars(BigDecimal value) {
-        depositInDollars.add(value);
+    public void deposit(BigDecimal value) {
+        amount = amount.add(value);
     }
 
 

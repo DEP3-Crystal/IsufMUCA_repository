@@ -1,5 +1,5 @@
 package models;
 
 public enum CurrencyType {
-    EURO,DOLLAR
+    EUR,USD,ALL
 }

@@ -1,15 +1,11 @@
 package io;
 
-import models.Bank;
-import models.BankAccount;
-import models.CreditCard;
-import models.UserPickedCurrencyAndValue;
+import models.*;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class UserInterfaceManager {
-
 
     //Bank account which corresponds to the credit card.
     BankAccount bankAccount;
@@ -20,17 +16,15 @@ public class UserInterfaceManager {
         CreditCard insertedCreditCard = null;
 
         System.out.println("Enter your id: ");
-        id = input.next();
+        id = input.next().trim();
         System.out.println("Enter your name: ");
-        name = input.next();
+        name = input.next().trim();
         System.out.println("Enter your surname: ");
-        surname = input.next();
+        surname = input.next().trim();
 
         for (BankAccount bankAccountObject : bank.getAllAccounts()) {
 
-            if (bankAccountObject.getPerson().getId().equals(id) &&
-                    bankAccountObject.getPerson().getName().equals(name) &&
-                    bankAccountObject.getPerson().getSurname().equals(surname)) {
+            if (bankAccountObject.getPerson().getId().equals(id) && bankAccountObject.getPerson().getName().equals(name) && bankAccountObject.getPerson().getSurname().equals(surname)) {
                 bankAccount = bankAccountObject;
                 insertedCreditCard = bankAccountObject.getCard();
                 break;
@@ -45,7 +39,7 @@ public class UserInterfaceManager {
 
     public void initialMessage() throws InterruptedException {
         System.out.println("Processing...");
-        Thread.sleep(3000);
+        Thread.sleep(1000);
     }
 
     public void greet() {
@@ -68,33 +62,52 @@ public class UserInterfaceManager {
         return password;
     }
 
-    public String askForRoutine() {
+    public Routine askForRoutine() {
 
-        String routine = "Withdraw";
+        Routine routine = Routine.WITHDRAW;
 
         System.out.println("Please select your routine: \n");
         System.out.println("1.Withdraw");
         System.out.println("2.Deposit\n");
         System.out.println("Your answer: ");
 
-        String answer = input.next();
+        String answer = input.next().trim();
 
         if (answer.equals("2")) {
-            routine = "Deposit";
+            routine = Routine.DEPOSIT;
         }
 
         return routine;
     }
 
-    private BigDecimal pickOptionForTheValueToWithDraw() {
+    public CurrencyType choseCurrency() {
+
+        CurrencyType[] currencies = CurrencyType.values();
+
+        for (int i = 0; i < currencies.length; i++) {
+            System.out.println((i + 1) + ". Pick " + currencies[i]);
+        }
+
+        String answer = "";
+
+        while (!((answer + "").matches("[1-9]+"))) {
+            System.out.println("Answer: ");
+            answer = input.next();
+        }
+
+        return currencies[Integer.parseInt(answer) - 1];
+    }
+
+
+    public BigDecimal choseValue(CurrencyType currency) {
 
         System.out.println("Please pick one options from below: ");
-        System.out.println("1. Withdraw 10\n" +
-                "2. Withdraw 50\n" +
-                "3. Withdraw 100\n" +
-                "4. Withdraw 200\n" +
-                "5. Withdraw 500\n" +
-                "6. Insert the value yourself");
+        System.out.println("1.  10 " + currency +
+                "\n" + "2.  50 " + currency +
+                "\n" + "3.  100 " + currency +
+                "\n" + "4.  200 " + currency +
+                "\n" + "5.  500 " + currency +
+                "\n" + "6. Insert the value yourself\n" + "X. Enter Any other number to quit");
         System.out.println("Your answer: ");
 
         int option = input.nextInt();
@@ -123,75 +136,22 @@ public class UserInterfaceManager {
                 break;
 
             case 6:
-                System.out.println("Enter the value you want to withdraw: ");
+                System.out.println("Enter the value you want for transaction: ");
                 String stringValue = input.next();
                 while (!stringValue.matches("[0-9]+")) {
-                    System.out.println("Enter the value you want to withdraw: ");
+                    System.out.println("Enter the value you want for transaction: ");
                     stringValue = input.next();
                 }
                 value = new BigDecimal(stringValue);
                 break;
 
             default:
-                System.out.println("It seems like you don't want to withdraw any value !");
+                System.out.println("It seems like you don't want to do any transaction !");
                 value = new BigDecimal("0");
                 break;
 
         }
         return value;
-    }
-
-    public UserPickedCurrencyAndValue choseCurrencyAndPickOptionForWithdraw() {
-
-        String currency;
-
-        System.out.println("Press 1 for withdrawing Euro");
-        System.out.println("Press 2 for withdrawing Dollars");
-        System.out.println("Answer: ");
-        String answer = input.next();
-        while (!(answer.equals("1") || answer.equals("2"))) {
-            System.out.println("Press 1 for withdrawing Euro");
-            System.out.println("Press 2 for withdrawing Dollars");
-            System.out.println("Answer: ");
-            answer = input.next();
-        }
-
-        if (answer.equals("1")) {
-            currency = "Euro";
-        } else {
-            currency = "Dollars";
-        }
-        return new UserPickedCurrencyAndValue(currency, pickOptionForTheValueToWithDraw());
-    }
-
-    public UserPickedCurrencyAndValue choseCurrencyAndAddToDeposit() {
-        String currency;
-
-        System.out.println("Press 1 for withdrawing Euro");
-        System.out.println("Press 2 for withdrawing Dollars");
-        System.out.println("Answer: ");
-        String answer = input.next();
-        while (!(answer.equals("1") || answer.equals("2"))) {
-            System.out.println("Press 1 for withdrawing Euro");
-            System.out.println("Press 2 for withdrawing Dollars");
-            System.out.println("Answer: ");
-            answer = input.next();
-        }
-
-        if (answer.equals("1")) {
-            currency = "Euro";
-        } else {
-            currency = "Dollars";
-        }
-
-        System.out.println("Enter the value you want to add to deposit and then insert the money !");
-        String value = input.next();
-        while (!(value.matches("[0-9]+"))) {
-            System.out.println("Re-enter the value");
-            value = input.next();
-        }
-
-        return new UserPickedCurrencyAndValue(currency, new BigDecimal(value));
     }
 
 }

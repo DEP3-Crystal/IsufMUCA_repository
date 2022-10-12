@@ -1,79 +1,87 @@
 package application;
 
-import models.Bank;
-import models.CreditCard;
-import models.UserPickedCurrencyAndValue;
-import data.DataFromFileManager;
+import data.DataFromFile;
+import data.DataManager;
 import io.UserInterfaceManager;
+import models.*;
 import services.ATM;
 
-import java.util.Currency;
+import java.io.IOException;
+import java.math.BigDecimal;
 
 public class Application {
     public static void main(String[] args) {
 
-        DataFromFileManager dataManager = null;
-        ATM atm = null;
+        String fileURL = "ATM/src/main/resources/accountsCSV.csv";
+
+        DataManager data = new DataFromFile(fileURL);
+
+        Bank bank = new Bank("BKT", data.getAllBankAccounts());
+
+        BankAccount currentBankAccount;
+
+        UserInterfaceManager gui = new UserInterfaceManager();
+
+
+        ATM atm = new ATM(gui.handleUserValidation(bank), gui.askForPassword());
 
         try {
+            gui.initialMessage();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
-            dataManager = new DataFromFileManager("ATM/src/main/resources/accounts.properties");
+        gui.greet();
 
-            UserInterfaceManager GUI = new UserInterfaceManager();
+        if (atm.checkValidPassword() && atm.connectToBank(bank.getAllAccounts())) {
 
-            Bank myBank = new Bank("Atlas-Bank", dataManager.getAllBankAccounts());
+            BigDecimal value;
 
-            try {
+            CurrencyType currency;
 
-                GUI.initialMessage();
+            currentBankAccount = atm.getBankAccount();
 
-            } catch (InterruptedException exception) {
-                exception.printStackTrace();
-            }
+            Routine routine = gui.askForRoutine();
 
+            if (routine.equals(Routine.WITHDRAW)) {
 
-            CreditCard creditCard = GUI.handleUserValidation(myBank);
+                currency = gui.choseCurrency();
 
-            int fourDigitPassword = GUI.askForPassword();
+                value = gui.choseValue(currency);
 
-            atm = new ATM(creditCard, fourDigitPassword);
+                if (currency.equals(currentBankAccount.getCurrency())) {
 
-            if (atm.checkValidPassword()) {
+                    atm.withdraw(value);
 
-                if (atm.connectToBank(myBank.getAllAccounts())) {
+                } else {
 
-                    GUI.greet();
+                    atm.withdraw(value, currency);
 
-                    String routine = GUI.askForRoutine();
+                }
+            } else if (routine.equals(Routine.DEPOSIT)) {
 
-                    UserPickedCurrencyAndValue currencyValue;
+                currency = gui.choseCurrency();
 
-                    if (routine.equals("Withdraw")) {
+                value = gui.choseValue(currency);
 
-                        currencyValue = GUI.choseCurrencyAndPickOptionForWithdraw();
+                if (currency.equals(currentBankAccount.getCurrency())) {
 
-                        if (currencyValue.getCurrency().equals("Euro")) {
-                            atm.withdrawInEuro(currencyValue.getValue());
-                        } else if (currencyValue.getCurrency().equals("Dollars")) {
-                            atm.withdrawInDollars(currencyValue.getValue());
-                        }
+                    atm.deposit(value);
 
-                    } else if (routine.equals("Deposit")) {
-                        currencyValue = GUI.choseCurrencyAndAddToDeposit();
-                        if (currencyValue.getCurrency().equals("Euro")) {
-                            atm.addToDepositInEuro(currencyValue.getValue());
-                        } else if (currencyValue.getCurrency().equals("Dollars")) {
-                            atm.addToDepositInDollars(currencyValue.getValue());
-                        }
-                    }
+                } else {
+
+                    atm.deposit(value, currency);
+
                 }
             }
-
-            GUI.salute();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally {
-            dataManager.setBankAccount(atm.getBankAccount().getAccountId(), atm.getBankAccount());
         }
+
+        try {
+            data.update(bank.getAllAccounts());
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
+        gui.salute();
     }
 }
