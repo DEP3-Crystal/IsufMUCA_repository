@@ -1,0 +1,38 @@
+{
+  "compactDisks": [
+    {
+      "title": "Rap Compact Disk 1",
+      "category": "compactDisk",
+      "priceInDollars": "3",
+      "type": "rap",
+      "artist": "Eminem",
+      "tracks": [
+        {
+          "title": "Rap God",
+          "length": 6
+        },
+        {
+          "title": "Venom",
+          "length": 5
+        }
+      ]
+    },
+    {
+      "title": "Rock Compact Disk 1",
+      "category": "compactDisk",
+      "priceInDollars": "3",
+      "type": "rock",
+      "artist": "Pantera",
+      "tracks": [
+        {
+          "title": "5 minutes alone",
+          "length": 6
+        },
+        {
+          "title": "Cemetery gates",
+          "length": 5
+        }
+      ]
+    }
+  ]
+}

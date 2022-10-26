@@ -1,6 +1,6 @@
 package com.models;
 
-public class Media {
+public abstract class Media {
     protected String title;
     protected String category; //value can be game, movie, series
     protected int priceInDollars;

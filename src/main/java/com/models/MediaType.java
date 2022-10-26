@@ -1,5 +1,5 @@
 package com.models;
 
 public enum MediaType {
-    DIGITAL_VIDEO_DISK,BOOK,TRACK
+    DIGITAL_VIDEO_DISK,BOOK,COMPACT_DISK
 }

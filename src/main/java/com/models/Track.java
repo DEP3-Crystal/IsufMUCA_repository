@@ -1,7 +1,27 @@
 package com.models;
 
-public class Track extends Media {
-    public Track(String title, String category, int priceInDollars, String type) {
-        super(title, category, priceInDollars, type);
+public class Track {
+    private String name;
+    private int length;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public Track(String name, int length) {
+        this.name = name;
+        this.length = length;
     }
 }

@@ -1,6 +1,7 @@
 package com.models;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Order {
 
@@ -8,7 +9,7 @@ public class Order {
     private String clientSurname;
     private String clientEmail;
     private String clientPhoneNumber;
-    private ArrayList<Media> order;
+    private Map<Media, Integer> clientOrder;
 
     public String getClientName() {
         return clientName;
@@ -42,20 +43,34 @@ public class Order {
         this.clientPhoneNumber = clientPhoneNumber;
     }
 
-    public ArrayList<Media> getOrder() {
-        return order;
+    public Map<Media, Integer> getClientOrder() {
+        return clientOrder;
     }
 
-    public void setOrder(ArrayList<Media> order) {
-        this.order = order;
+    public void setClientOrder(Map<Media, Integer> clientOrder) {
+        this.clientOrder = clientOrder;
     }
 
     public void addOrder(Media media) {
-        order.add(media);
+
+        if (clientOrder.containsKey(media)) {
+            int count = clientOrder.get(media) + 1;
+            clientOrder.put(media, count);
+        } else {
+            clientOrder.put(media, 1);
+        }
     }
 
-    public void removeOrder(int index) {
-        order.remove(index);
+    public void removeOrder(Media media) {
+        if (!clientOrder.containsKey(media)) {
+            return;
+        }
+        if (clientOrder.get(media) == 1) {
+            clientOrder.remove(media);
+        } else {
+            int count = clientOrder.get(media) - 1;
+            clientOrder.put(media, count);
+        }
     }
 
     public Order(String clientName, String clientSurname, String clientEmail, String clientPhoneNumber) {
@@ -63,7 +78,7 @@ public class Order {
         this.clientSurname = clientSurname;
         this.clientEmail = clientEmail;
         this.clientPhoneNumber = clientPhoneNumber;
-        this.order = new ArrayList<>();
+        this.clientOrder = new HashMap<>();
     }
 
 
