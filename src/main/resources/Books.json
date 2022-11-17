@@ -1,0 +1,22 @@
+{
+  "books": [
+    {
+      "title": "The cat in hat",
+      "category": "book",
+      "priceInDollars": "12",
+      "type": "fiction",
+      "authors": [
+        "Dr Seuss"
+      ]
+    },
+    {
+      "title": "Robinson Crusoe",
+      "category": "book",
+      "priceInDollars": "15",
+      "type": "fiction",
+      "authors": [
+        "Daniel Defoe"
+      ]
+    }
+  ]
+}
